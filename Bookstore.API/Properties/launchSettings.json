@@ -16,8 +16,7 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7251;http://localhost:5251",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "COSMOS_CONNECTION_STRING": "AccountEndpoint=https://cosmos-perficient-dev-use2.documents.azure.com:443/;AccountKey=uub13emhzKeVisz3GbrQgBfSeB4E7Q7oLeYDVTKXYlGpcBGX7DBdL154uxfcb2DO7Px0R4W12cyRVDYwsaJ0gg==;"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "IIS Express": {
