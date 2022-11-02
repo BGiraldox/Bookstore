@@ -10,7 +10,7 @@ namespace Bookstore.Core.Interfaces.Persistence
 
         Task<List<T>> GetAll();
 
-        Task<T> GetById(T entityId);
+        Task<T> GetById(string entityId, string partitionKey);
 
         Task<T> Update(T entity);
 

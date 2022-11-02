@@ -1,7 +1,6 @@
 ﻿using Bookstore.Core.Entities;
 using Bookstore.Core.Interfaces.Common;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,12 +20,13 @@ namespace Bookstore.API.Controllers
         // GET: api/<AuthorsController>
         [HttpGet]
         public async Task<IEnumerable<Author>> GetAll() => await _service.GetAll().ConfigureAwait(false);
-        
+
         // GET api/<AuthorsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{pk}/{id}")]
+        public async Task<IActionResult> Get(string id, string pk)
         {
-            return "value";
+            var result = await _service.GetById(id, pk).ConfigureAwait(false);
+            return result is null ? NotFound() : Ok(result);
         }
 
         // POST api/<AuthorsController>
@@ -43,6 +43,6 @@ namespace Bookstore.API.Controllers
 
         // DELETE api/<AuthorsController>/5/test
         [HttpDelete("{pk}/{id}")]
-        public async void Delete(string id, string pk) =>  await _service.Delete(id, pk).ConfigureAwait(false);
+        public async void Delete(string id, string pk) => await _service.Delete(id, pk).ConfigureAwait(false);
     }
 }

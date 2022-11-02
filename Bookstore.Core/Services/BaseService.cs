@@ -19,14 +19,11 @@ namespace Bookstore.Core.Services
         }
 
         public async Task<List<T>> GetAll() => await _repository.GetAll().ConfigureAwait(false);
-        
-        public Task<T> GetById(T entityId)
-        {
-            throw new NotImplementedException();
-        }
+
+        public async Task<T> GetById(string entityId, string partitionKey) => await _repository.GetById(entityId, partitionKey).ConfigureAwait(false);
 
         public async Task<T> Update(T entity) => await _repository.Update(entity).ConfigureAwait(false);
-        
+
 
         public async Task Delete(string entityId, string partitionKey) => await _repository.Delete(entityId, partitionKey).ConfigureAwait(false);
 

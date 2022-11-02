@@ -22,10 +22,11 @@ namespace Bookstore.API.Controllers
         public async Task<IEnumerable<Book>> GetAll() => await _service.GetAll().ConfigureAwait(false);
 
         // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{pk}/{id}")]
+        public async Task<IActionResult> Get(string id, string pk)
         {
-            return "value";
+            var result = await _service.GetById(id, pk).ConfigureAwait(false);
+            return result is null ? NotFound() : Ok(result);
         }
 
         // POST api/<ValuesController>

@@ -2,6 +2,7 @@
 using Bookstore.Core.Interfaces.Persistence;
 using Bookstore.Core.Utility;
 using Microsoft.Azure.Cosmos;
+using Microsoft.Azure.Cosmos.Linq;
 
 namespace Bookstore.Infrastructure.Persistence.Repositories
 {
@@ -16,26 +17,31 @@ namespace Bookstore.Infrastructure.Persistence.Repositories
             _container = cosmosClient.GetContainer(Constants.DATABASE_NAME, ContainerName);
         }
 
-        public async Task<T> Add(T entity) 
+        public async Task<T> Add(T entity)
             => await _container.CreateItemAsync<T>(entity, new PartitionKey(entity.GetPartitionKey())).ConfigureAwait(false);
-        
+
         public async Task<List<T>> GetAll()
         {
-            var query = _container.GetItemQueryIterator<T>(new QueryDefinition("select * from c"));
-
+            using var iterator = _container.GetItemLinqQueryable<T>().ToFeedIterator();
             List<T> result = new();
-            while (query.HasMoreResults)
+
+            while (iterator.HasMoreResults)
             {
-                var response = await query.ReadNextAsync().ConfigureAwait(false);
+                var response = await iterator.ReadNextAsync().ConfigureAwait(false);
                 result.AddRange(response);
             }
 
             return result;
         }
 
-        public Task<T> GetById(T entityId)
+        public async Task<T> GetById(string entityId, string partitionKey)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var readResponse = await _container.ReadItemAsync<T>(entityId, new PartitionKey(partitionKey)).ConfigureAwait(false);
+                return readResponse.Resource;
+            }
+            catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound) { return null; }
         }
 
         public async Task<T> Update(T entity)
@@ -46,7 +52,7 @@ namespace Bookstore.Infrastructure.Persistence.Repositories
             }
             catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound) { return null; }
         }
-        
+
         public async Task Delete(string entityId, string partitionKey)
             => await _container.DeleteItemAsync<T>(entityId, new PartitionKey(partitionKey)).ConfigureAwait(false);
     }
