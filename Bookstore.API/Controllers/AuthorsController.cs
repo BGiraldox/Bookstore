@@ -20,11 +20,8 @@ namespace Bookstore.API.Controllers
 
         // GET: api/<AuthorsController>
         [HttpGet]
-        public async Task<IEnumerable<Author>> GetAll()
-        {
-            return await _service.GetAll().ConfigureAwait(false);
-        }
-
+        public async Task<IEnumerable<Author>> GetAll() => await _service.GetAll().ConfigureAwait(false);
+        
         // GET api/<AuthorsController>/5
         [HttpGet("{id}")]
         public string Get(int id)
@@ -45,7 +42,7 @@ namespace Bookstore.API.Controllers
         }
 
         // DELETE api/<AuthorsController>/5/test
-        [HttpDelete("{id}/{pk}")]
+        [HttpDelete("{pk}/{id}")]
         public async void Delete(string id, string pk) =>  await _service.Delete(id, pk).ConfigureAwait(false);
     }
 }

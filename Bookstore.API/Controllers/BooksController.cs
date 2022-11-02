@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Bookstore.Core.Entities;
+using Bookstore.Core.Interfaces.Common;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,12 +10,16 @@ namespace Bookstore.API.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
+        private readonly IBaseService<Book> _service;
+
+        public BooksController(IBaseService<Book> service)
+        {
+            _service = service;
+        }
+
         // GET: api/<ValuesController>
         [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        public async Task<IEnumerable<Book>> GetAll() => await _service.GetAll().ConfigureAwait(false);
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
@@ -24,20 +30,18 @@ namespace Bookstore.API.Controllers
 
         // POST api/<ValuesController>
         [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        public async Task<IActionResult> Post([FromBody] Book book) => Ok(await _service.Add(book).ConfigureAwait(false));
 
         // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] Book book)
         {
+            var result = await _service.Update(book).ConfigureAwait(false);
+            return result is null ? NotFound() : Ok(result);
         }
 
         // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        [HttpDelete("{pk}/{id}")]
+        public async void Delete(string id, string pk) => await _service.Delete(id, pk).ConfigureAwait(false);
     }
 }
