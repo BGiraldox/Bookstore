@@ -1,14 +1,16 @@
-﻿using Bookstore.Core.Interfaces.Common;
+﻿using Bookstore.Core.Entities;
+using Bookstore.Core.Interfaces.Common;
 using Bookstore.Core.Interfaces.Persistence;
 using Bookstore.Core.Utility;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
+using System.Linq.Expressions;
 
 namespace Bookstore.Infrastructure.Persistence.Repositories
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly Container _container;
+        protected readonly Container _container;
 
         public string ContainerName => $"{typeof(T).Name}s";
 
@@ -42,6 +44,19 @@ namespace Bookstore.Infrastructure.Persistence.Repositories
                 return readResponse.Resource;
             }
             catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound) { return null; }
+        }
+
+        public async Task<List<T>> GetByFilter(Expression<Func<T, bool>> filter)
+        {
+            using FeedIterator<T> iterator = _container.GetItemLinqQueryable<T>().Where(filter).ToFeedIterator();
+            List<T> result = new();
+            while (iterator.HasMoreResults)
+            {
+                var response = await iterator.ReadNextAsync().ConfigureAwait(false);
+                result.AddRange(response);
+            }
+
+            return result;
         }
 
         public async Task<T> Update(T entity)

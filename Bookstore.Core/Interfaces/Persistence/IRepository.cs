@@ -1,4 +1,5 @@
 ﻿using Bookstore.Core.Interfaces.Common;
+using System.Linq.Expressions;
 
 namespace Bookstore.Core.Interfaces.Persistence
 {
@@ -11,6 +12,8 @@ namespace Bookstore.Core.Interfaces.Persistence
         Task<List<T>> GetAll();
 
         Task<T> GetById(string entityId, string partitionKey);
+
+        Task<List<T>> GetByFilter(Expression<Func<T, bool>> filter);
 
         Task<T> Update(T entity);
 
