@@ -26,8 +26,8 @@ namespace Bookstore.API.Controllers
         public async Task<IEnumerable<Author>> GetAll() => await _service.GetAll().ConfigureAwait(false);
 
         // Post: api/<AuthorsController>/filter
-        [HttpPost("filter")]
-        public async Task<IActionResult> GetAllByFilter([FromBody] AuthorsQueryFilter filterFields)
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetAllByFilter([FromQuery] AuthorsQueryFilter filterFields)
         {
             var validationResult = await _filterValidator.ValidateAsync(filterFields);
 

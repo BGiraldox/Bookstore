@@ -1,0 +1,500 @@
+{
+	"info": {
+		"_postman_id": "64341725-5bbd-4307-be14-d8434835bccb",
+		"name": "Bookstore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15671939"
+	},
+	"item": [
+		{
+			"name": "Authors",
+			"item": [
+				{
+					"name": "GetAuthors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/authors",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetByFilter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/authors/filter?filterType=LiveOrDeathAutors&IsAlive=false",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"authors",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "filterType",
+									"value": "LiveOrDeathAutors"
+								},
+								{
+									"key": "IsAlive",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "AuthorsByCountry",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/authors/filter?filterType=AuthorsByCountry&Country=Test",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"authors",
+										"filter"
+									],
+									"query": [
+										{
+											"key": "filterType",
+											"value": "AuthorsByCountry"
+										},
+										{
+											"key": "Country",
+											"value": "Test"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "LiveOrDeathAutors",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/authors/filter?filterType=LiveOrDeathAutors&IsAlive=false",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"authors",
+										"filter"
+									],
+									"query": [
+										{
+											"key": "filterType",
+											"value": "LiveOrDeathAutors"
+										},
+										{
+											"key": "IsAlive",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "AuthorsByAge",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/authors/filter?filterType=AuthorsByAge&Age=10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"authors",
+										"filter"
+									],
+									"query": [
+										{
+											"key": "filterType",
+											"value": "AuthorsByAge"
+										},
+										{
+											"key": "Age",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "CreateAuthor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"Stanley Martin Lieber\",\r\n        \"image\": \"test.jpg\",\r\n        \"description\": \"Legend\",\r\n        \"bornDate\": \"2022-01-01\",\r\n        \"city\": \"Manhattan\",\r\n        \"country\": \"United States\",\r\n        \"isAlive\": false,\r\n        \"diedDate\": \"2022-01-01\",\r\n        \"Id\": \"x\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/authors",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateAuthor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"Stanley Martin Lieber\",\r\n        \"image\": \"test.jpg\",\r\n        \"description\": \"Legend\",\r\n        \"bornDate\": \"2022-01-01\",\r\n        \"city\": \"Manhattan\",\r\n        \"country\": \"United Statess\",\r\n        \"isAlive\": false,\r\n        \"diedDate\": \"2022-01-01\",\r\n        \"Id\": \"efe6d568-4186-4e84-b0bc-b2b20a814f41\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/authors",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAuthor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/authors/pk/id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"authors",
+								"pk",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAuthorByIdPk",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/authors/pk/id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"authors",
+								"pk",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "GetBooks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/books",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateBooks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"Id\":\"1465478906\",\r\n   \"AuthorId\":\"Stan Lee\",\r\n   \"AuthorName\":\"Stan Lee\",\r\n   \"Image\" : \"7cc89ccf-a1c7-4085-a9b2-be213fbc030e.jpg\",\r\n   \"Publisher\":\"DK\",\r\n   \"Category\": \"Fantasy\",\r\n   \"PublicationDate\":\"2022-01-01\",\r\n   \"Language\":\"English\",\r\n   \"PrintLength\":448,\r\n   \"Description\":\"Discover the essential facts about Marvel Comics timeless heroes such as Captain America, Spider-Man, and Iron Man and villains like Thanos, Loki, and Kingpin.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/books",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateBook",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"Id\":\"7353691a-665b-4d54-8aa4-4914ba87c817\",\r\n   \"AuthorId\":\"Stan Lee\",\r\n   \"AuthorName\":\"Stan Lee\",\r\n   \"Image\" : \"7cc89ccf-a1c7-4085-a9b2-be213fbc030e.jpg\",\r\n   \"Publisher\":\"DK\",\r\n   \"Category\": \"Fantasy\",\r\n   \"PublicationDate\":\"2022-01-02\",\r\n   \"Language\":\"English\",\r\n   \"PrintLength\":448,\r\n   \"Description\":\"Discover the essential facts about Marvel Comics timeless heroes such as Captain America, Spider-Man, and Iron Man and villains like Thanos, Loki, and Kingpin.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/books",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteBook",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/books/Fantasy/7353691a-665b-4d54-8aa4-4914ba87c817",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"Fantasy",
+								"7353691a-665b-4d54-8aa4-4914ba87c817"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBookByIdPk",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/books/Fantasy/80a076e2-6cd8-4ad8-b522-9965954151df",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"Fantasy",
+								"80a076e2-6cd8-4ad8-b522-9965954151df"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBooksByFilter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/books/filter?filterType=BooksByCategory&Category=Health",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "filterType",
+									"value": "BooksByCategory"
+								},
+								{
+									"key": "Category",
+									"value": "Health"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "BooksByCategory",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/books/filter?filterType=BooksByCategory&Category=Health",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"books",
+										"filter"
+									],
+									"query": [
+										{
+											"key": "filterType",
+											"value": "BooksByCategory"
+										},
+										{
+											"key": "Category",
+											"value": "Health"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "BooksByAuthor",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/books/filter?filterType=BooksByAuthor&AuthorId=ac2d34f8-9f7d-4a0e-b53e-17cba7d297c0",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"books",
+										"filter"
+									],
+									"query": [
+										{
+											"key": "filterType",
+											"value": "BooksByAuthor"
+										},
+										{
+											"key": "AuthorId",
+											"value": "ac2d34f8-9f7d-4a0e-b53e-17cba7d297c0"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "BooksByPublicationDateRange",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/books/filter?filterType=BooksByPublicationDateRange&PublicationDateStart=10-12-2022&PublicationDateEnd=10-22-2022",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"books",
+										"filter"
+									],
+									"query": [
+										{
+											"key": "filterType",
+											"value": "BooksByPublicationDateRange"
+										},
+										{
+											"key": "PublicationDateStart",
+											"value": "10-12-2022"
+										},
+										{
+											"key": "PublicationDateEnd",
+											"value": "10-22-2022"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		}
+	]
+}

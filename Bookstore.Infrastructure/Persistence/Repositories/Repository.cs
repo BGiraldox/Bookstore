@@ -12,11 +12,18 @@ namespace Bookstore.Infrastructure.Persistence.Repositories
     {
         protected readonly Container _container;
 
+        protected QueryRequestOptions queryOptions;
+
         public string ContainerName => $"{typeof(T).Name}s";
 
         public Repository(CosmosClient cosmosClient)
         {
             _container = cosmosClient.GetContainer(Constants.DATABASE_NAME, ContainerName);
+
+            queryOptions = new QueryRequestOptions
+            {
+                MaxItemCount = Constants.MAX_NUMBER_OF_RESULT_ITEMS
+            };
         }
 
         public async Task<T> Add(T entity)
@@ -24,7 +31,11 @@ namespace Bookstore.Infrastructure.Persistence.Repositories
 
         public async Task<List<T>> GetAll()
         {
-            using var iterator = _container.GetItemLinqQueryable<T>().ToFeedIterator();
+            using var iterator = _container
+                .GetItemLinqQueryable<T>(requestOptions: queryOptions)
+                .Take(Constants.MAX_NUMBER_OF_RESULT_ITEMS)
+                .ToFeedIterator();
+
             List<T> result = new();
 
             while (iterator.HasMoreResults)
@@ -48,7 +59,13 @@ namespace Bookstore.Infrastructure.Persistence.Repositories
 
         public async Task<List<T>> GetByFilter(Expression<Func<T, bool>> filter)
         {
-            using FeedIterator<T> iterator = _container.GetItemLinqQueryable<T>().Where(filter).ToFeedIterator();
+
+            using FeedIterator<T> iterator = _container
+                .GetItemLinqQueryable<T>(requestOptions: queryOptions)
+                .Where(filter)
+                .Take(Constants.MAX_NUMBER_OF_RESULT_ITEMS)
+                .ToFeedIterator();
+
             List<T> result = new();
             while (iterator.HasMoreResults)
             {
