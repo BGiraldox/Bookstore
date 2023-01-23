@@ -1,5 +1,4 @@
-﻿using Bookstore.Core.Entities;
-using Bookstore.Core.Interfaces.Common;
+﻿using Bookstore.Core.Interfaces.Common;
 using Bookstore.Core.Interfaces.Persistence;
 using Bookstore.Core.Utility;
 using Microsoft.Azure.Cosmos;
@@ -22,6 +21,8 @@ namespace Bookstore.Infrastructure.Persistence.Repositories
 
             queryOptions = new QueryRequestOptions
             {
+                //Max number of results per set of results.
+                //This is done to avoid returning excessive amounts of data in a single request and to improve performance.
                 MaxItemCount = Constants.MAX_NUMBER_OF_RESULT_ITEMS
             };
         }
@@ -33,7 +34,7 @@ namespace Bookstore.Infrastructure.Persistence.Repositories
         {
             using var iterator = _container
                 .GetItemLinqQueryable<T>(requestOptions: queryOptions)
-                .Take(Constants.MAX_NUMBER_OF_RESULT_ITEMS)
+                .Take(Constants.MAX_NUMBER_OF_RESULT_ITEMS) //Set the max number of items to be taken and then returned
                 .ToFeedIterator();
 
             List<T> result = new();
